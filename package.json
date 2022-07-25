@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "studio": "prisma studio",
+    "prisma:push": "prisma db push",
+    "prisma:migrate": "prisma migrate dev --name init",
     "postinstall": "prisma generate"
   },
   "dependencies": {
