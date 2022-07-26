@@ -14,15 +14,14 @@ model Example {
     id String @id @default(cuid())
 }
 
-// Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
     userId            String
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? @db.VarChar(255)
-    access_token      String? @db.VarChar(255)
+    refresh_token     String? @db.TinyText()
+    access_token      String? @db.TinyText()
     expires_at        Int?
     token_type        String?
     scope             String?
