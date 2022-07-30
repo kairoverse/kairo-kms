@@ -1,4 +1,4 @@
-import { withAuth } from "../../utils/withAuth";
+import { withAuth } from "../../hoc/withAuth";
 import type { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 
