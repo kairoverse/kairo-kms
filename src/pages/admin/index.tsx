@@ -1,8 +1,8 @@
 import { withAuth } from "../../hoc/withAuth";
-import type { GetServerSideProps } from "next";
+import type { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";
 
-const AdminPage = withAuth((props: any) => {
+const AdminPage = (props: any) => {
   const session = useSession();
   return (
     <div>
@@ -12,10 +12,14 @@ const AdminPage = withAuth((props: any) => {
       <pre>{JSON.stringify(props.hello, null, 2)}</pre>
     </div>
   );
-});
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return AdminPage.getServerSideProps(context);
 };
 
-export default AdminPage.Component;
+export const getServerSideProps: GetServerSideProps = withAuth(async () => {
+  return {
+    props: {
+      hello: "world",
+    },
+  };
+});
+
+export default AdminPage;

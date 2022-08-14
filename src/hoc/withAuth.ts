@@ -1,35 +1,20 @@
 import { getSession } from "next-auth/react";
 import { ROUTES } from "../config/constants";
 
-import type { GetServerSideProps } from "next";
-import type { ComponentType } from "react";
+import type { GetServerSideProps, GetServerSidePropsContext } from "next";
 
-export const withAuth: WithAuth = (Component) => {
-  return {
-    Component,
-    getServerSideProps: async (context) => {
-      const session = await getSession(context);
-
-      if (!session) {
-        return {
-          redirect: {
-            destination: ROUTES.auth_redirect,
-            permanent: false,
-          },
-        };
-      }
-
+export const withAuth = (getServerSideProps: GetServerSideProps) => {
+  return async (context: GetServerSidePropsContext) => {
+    const session = await getSession(context);
+    if (!session) {
       return {
-        props: {
-          session,
-          hello: "world",
+        redirect: {
+          destination: ROUTES.auth_redirect,
+          permanent: false,
         },
       };
-    },
-  };
-};
+    }
 
-export type WithAuth = (Component: ComponentType) => {
-  Component: ComponentType;
-  getServerSideProps: GetServerSideProps;
+    return await getServerSideProps(context);
+  };
 };
